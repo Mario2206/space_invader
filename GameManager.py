@@ -10,7 +10,7 @@ class GameManager:
     def __init__(self, win_x, win_y) -> None:
         # Add game items
         self.player = Ship(win_x / 2, win_y * 0.85, win_x * 0.1, win_y * 0.1)
-        self.score = Score(50)
+        self.score = Score(0)
         self.life = LifeGroup(3, win_x * 0.06, win_x * 0.06)
 
         # Add background
@@ -33,6 +33,7 @@ class GameManager:
             {'min_score': 10, 'ennemy_quantity': 8, 'ennemy_life': 2},
             {'min_score': 20, 'ennemy_quantity': 14, 'ennemy_life': 2},
             {'min_score': 34, 'ennemy_quantity': 15, 'ennemy_life': 3},
+            {'min_score': 50, 'ennemy_quantity': 40, 'ennemy_life': 3},
         ]
 
         # Create groups
@@ -48,7 +49,6 @@ class GameManager:
 
         if self.life.life_number == 0:
             self.game_over(screen)
-
         else: 
             # Update game values
             self.player.update()
@@ -110,18 +110,20 @@ class GameManager:
 
     def game_over(self, screen):
 
-        # if not self.ennemy_group.is_empty():
-        #     self.manage_ennemies()
-        #     self.ennemy_group.destroy()
-        #     self.ennemy_group.update()
-        #     self.ennemy_group.draw(screen)
-        # else:
-        self.game_over_scene.update()
-        self.game_over_scene.draw(screen, self.win_x, self.win_y)
-        self.ennemy_group.empty()
-        
-        pygame.mixer.music.pause()
+        if not self.ennemy_group.is_empty():
+            self.manage_ennemies()
+            self.ennemy_group.destroy()
+            self.ennemy_group.update()
+            self.ennemy_group.draw(screen)
+            return
+        else:
+            self.game_over_scene.update()
+            self.game_over_scene.draw(screen, self.win_x, self.win_y)
+            pygame.mixer.music.pause()
     
+        # self.ennemy_group.empty()
+        
+        
     def restart_game(self):
         self.score.clear()
         self.life.reset()

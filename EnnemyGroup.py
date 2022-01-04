@@ -20,7 +20,6 @@ class EnnemyGroup(pygame.sprite.Group):
             # find level
             level = self._find_level()
             spacing_index = math.ceil(level["ennemy_quantity"] / 3) + 1
-            print(spacing_index)
             # spawn ennemies
             for _ in range(level["ennemy_quantity"]):
                 print("SPAWN ENNEMY !!!")
@@ -32,7 +31,6 @@ class EnnemyGroup(pygame.sprite.Group):
 
     def destroy(self):
         sprites = self.sprites()
-        print(sprites)
         for sprite in sprites:
             sprite.destroy()
 

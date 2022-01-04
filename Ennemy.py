@@ -28,13 +28,12 @@ class Ennemy(pygame.sprite.Sprite):
         if not self.is_destroyed :
             self.rect.y += self.speed
 
-        if self.is_animating == True and self.is_destroyed: 
+        if self.is_animating and self.is_destroyed: 
           
             self.animation_sprite_index += 0.4
 
             if int(self.animation_sprite_index) >= len(self.destroy_sprites) :
                 self.is_animating = False
-                return
             else :
                 self.image = self.destroy_sprites[int(self.animation_sprite_index)]
 
