@@ -1,11 +1,14 @@
 import pygame
 
+from Button import Button
+
 class GameOver:
     def __init__(self, score, player_life) -> None:
         self.score = score 
         self.player_life = player_life
         self.font = pygame.font.SysFont('Comic Sans MS', 30)
         self.surfaces = []
+        self.button = Button("Retry")
 
     def update(self):
         self.surfaces = []
@@ -26,9 +29,12 @@ class GameOver:
             y = (win_y / 2) - (height / 2) + total_height
             total_height += height
             items.append([surface, (x, y)])
-            # screen.blit(surface, (x, y))
 
         for item in items: 
             x, y = item[1]
             y -= total_height / 2
             screen.blit(item[0], (x, y) )
+        
+        self.button.x = (win_x / 2) - (self.button.width / 2)
+        self.button.y = (win_y / 2) - (self.button.height / 2) + total_height
+        self.button.draw(screen)

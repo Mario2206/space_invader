@@ -28,14 +28,15 @@ class Ennemy(pygame.sprite.Sprite):
         if not self.is_destroyed :
             self.rect.y += self.speed
 
-        if self.is_animating == True: 
+        if self.is_animating == True and self.is_destroyed: 
+          
             self.animation_sprite_index += 0.4
 
-            if self.animation_sprite_index >= len(self.destroy_sprites) :
+            if int(self.animation_sprite_index) >= len(self.destroy_sprites) :
                 self.is_animating = False
                 return
-
-            self.image = self.destroy_sprites[int(self.animation_sprite_index)]
+            else :
+                self.image = self.destroy_sprites[int(self.animation_sprite_index)]
 
     def damage(self):
         self.life-= 1
@@ -45,7 +46,7 @@ class Ennemy(pygame.sprite.Sprite):
             self.destroy_sound.play()
 
     def destroy(self):
-        if not self.is_destroyed:
+        if not self.is_destroyed:  
             self.destroy_sound.play()
             self.is_destroyed = True 
             self.is_animating = True

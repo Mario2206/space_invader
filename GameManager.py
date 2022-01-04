@@ -10,7 +10,7 @@ class GameManager:
     def __init__(self, win_x, win_y) -> None:
         # Add game items
         self.player = Ship(win_x / 2, win_y * 0.85, win_x * 0.1, win_y * 0.1)
-        self.score = Score(0)
+        self.score = Score(50)
         self.life = LifeGroup(3, win_x * 0.06, win_x * 0.06)
 
         # Add background
@@ -48,7 +48,6 @@ class GameManager:
 
         if self.life.life_number == 0:
             self.game_over(screen)
-            pass
 
         else: 
             # Update game values
@@ -79,6 +78,9 @@ class GameManager:
             if event.key == pygame.K_SPACE:
                 bullet = self.player.shoot(self.win_x * 0.03, self.win_x * 0.06)
                 self.bullet_group.add(bullet)
+        
+        if self.game_over_scene.button.is_clicked(event):
+            self.restart_game()
 
     def manage_ennemies(self):
         for ennemy in self.ennemy_group.sprites():
@@ -93,7 +95,8 @@ class GameManager:
                 print("ENNEMY KILLED")
                 ennemy.damage()
                 self.bullet_group.remove(bullet_collision)
-                self.score.increment()
+                if ennemy.life == 0:
+                    self.score.increment()
             
             if ennemy.rect.y + ennemy.height >= self.player.rect.y and not ennemy.is_destroyed :
                 self.life.remove()
@@ -106,14 +109,22 @@ class GameManager:
 
 
     def game_over(self, screen):
-        self.ennemy_group.destroy()
-        self.manage_ennemies()
 
-        if not self.ennemy_group.is_empty():
-            self.ennemy_group.update()
-            self.ennemy_group.draw(screen)
-        else:
-            self.game_over_scene.update()
-            self.game_over_scene.draw(screen, self.win_x, self.win_y)
+        # if not self.ennemy_group.is_empty():
+        #     self.manage_ennemies()
+        #     self.ennemy_group.destroy()
+        #     self.ennemy_group.update()
+        #     self.ennemy_group.draw(screen)
+        # else:
+        self.game_over_scene.update()
+        self.game_over_scene.draw(screen, self.win_x, self.win_y)
+        self.ennemy_group.empty()
         
         pygame.mixer.music.pause()
+    
+    def restart_game(self):
+        self.score.clear()
+        self.life.reset()
+        pygame.mixer.music.play(-1)
+
+        print("restart game")
