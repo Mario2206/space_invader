@@ -92,10 +92,10 @@ class GameManager:
                 self.ennemy_group.remove(ennemy)
 
             if bullet_collision and not ennemy.is_destroyed:
-                print("ENNEMY KILLED")
                 ennemy.damage()
                 self.bullet_group.remove(bullet_collision)
-                if ennemy.life == 0:
+                if ennemy.is_destroyed :
+                    print("ENNEMY KILLED")
                     self.score.increment()
             
             if ennemy.rect.y + ennemy.height >= self.player.rect.y and not ennemy.is_destroyed :
