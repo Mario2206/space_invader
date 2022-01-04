@@ -22,7 +22,9 @@ class LifeGroup:
     def draw(self, screen):
         self.life_group.draw(screen)
     
+
     def remove(self) : 
         list = self.life_group.sprites()
-        list_length = len(list)
-        self.life_group.remove(list[list_length - 1])
+        if self.life_number > 0:
+            self.life_group.remove(list[self.life_number - 1])
+            self.life_number-= 1

@@ -1,8 +1,8 @@
 import pygame
 
 class Score:
-    def __init__(self):
-        self.score = 0
+    def __init__(self, default_score = 0):
+        self.score = default_score
         self.font = pygame.font.SysFont('Comic Sans MS', 30)
     
     def increment(self, value = 1): 

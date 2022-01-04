@@ -15,6 +15,8 @@ class Ship(pygame.sprite.Sprite):
         self.image = pygame.transform.scale(self.image, (self.width, self.height))
         self.rect.x = x
         self.rect.y = y
+
+        self.shoot_sound = pygame.mixer.Sound("assets/sounds/shoot.mp3")
     
     def update(self):
         self.rect.x +=  (1 * self.dir * self.speed)
@@ -34,6 +36,7 @@ class Ship(pygame.sprite.Sprite):
             
     def shoot(self, width, height):
         bullet = Bullet(self.rect.x + (self.width / 2), self.rect.y - height, width, height)
+        self.shoot_sound.play()
         return bullet
 
     def checkBorderCollision(self, limits_x) :
